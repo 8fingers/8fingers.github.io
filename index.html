@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DungeonDelver</title>
+	<link rel="stylesheet" href="src/DungeonDelverCSS.css">
+</head>
+<body>
+	<div id="start">
+		<canvas class="canvas" id="startScreen" height=750 width=750></canvas>
+		<button id="startButton" onclick="startButton()">Start</button>
+		<button id="tutorialButton" onclick="tutorialButton()">Tutorial</button>
+	</div>
+	<div id="stage">
+		<canvas class="canvas" id="floor" height=750 width=750></canvas>
+		<canvas class="canvas" id="player" height=750 width=750></canvas>
+		<canvas class="canvas" id="realTime" height=750 width=750></canvas>
+		<canvas class="canvas" id="ui" height=750 width=750></canvas>
+	</div>
+	<div id="end">
+		<canvas class="canvas" id="endScreen" height=750 width=750></canvas>
+	</div>
+	
+	<script src = src/DungeonDelverJS.js></script>
+ 
+</body>
+</html>

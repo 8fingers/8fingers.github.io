@@ -1,0 +1,74 @@
+.canvas {
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 750px;
+	width: 750px;
+}
+
+#start {
+	position: relative;
+	visibility: visible;
+}
+
+#startScreen{
+	background-color: black;
+}
+
+#startButton{
+	position: absolute;
+	height: 100px;
+	width: 240px;
+	top: 240px;
+	left: 255px;
+	background-color: dimgrey;
+	text-align: center;
+	font-family: "Courier New", "Lucida Console", monospace;
+	font-weight: bold;
+	font-size: 65px;
+	color: darkgoldenrod;
+	border: solid;
+	border-radius: 10px;
+}
+
+#tutorialButton{
+	position: absolute;
+	height: 100px;
+	width: 335px;
+	top: 380px;
+	left: 205px;
+	background-color: dimgrey;
+	text-align: center;
+	font-family: "Courier New", "Lucida Console", monospace;
+	font-weight: bold;
+	font-size: 65px;
+	color: darkgoldenrod;
+	border: solid;
+	border-radius: 10px;
+}
+
+#stage{
+	position: relative;
+	visibility: hidden;
+}
+
+#end {
+	position: relative;
+	visibility: hidden;
+}
+
+#endScreen{
+	background-color: black;
+}
+
+#floor{
+	z-index: 0;
+}
+
+#player{
+	z-index: 1;
+}
+
+#ui{
+	z-index: 2;
+}
