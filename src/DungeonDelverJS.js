@@ -27,7 +27,7 @@ var gameSound = function (src) {
 	};
 };
 
-//var backgroundMusic = new gameSound('sfx/backgroundMusic.mp3');
+//var backgroundMusic = new Audio('sfx/backgroundMusic.mp3');
 
 var buttonSFX = new gameSound('sfx/button.wav');
 var doorOpenSFX = new gameSound('sfx/doorOpen.wav');
@@ -48,6 +48,17 @@ var doorSouthImage = new Image;
 doorSouthImage.src = "img/doorSouth.png";
 var doorWestImage = new Image;
 doorWestImage.src = "img/doorWest.png";
+var doorLockEastImage = new Image;
+doorLockEastImage.src = "img/doorEastLock.png";
+var doorLockWestImage = new Image;
+doorLockWestImage.src = "img/doorWestLock.png";
+var doorLockNorthImage = new Image;
+doorLockNorthImage.src = "img/doorNorthLock.png";
+var doorLockSouthImage = new Image;
+doorLockSouthImage.src = "img/doorSouthLock.png";
+var keyImage = new Image;
+keyImage.src = "img/key.png";
+
 var floorImage = new Image();
 floorImage.src ="img/floor.png";
 var teleportImage = new Image();
@@ -156,19 +167,20 @@ startScreenCtx.fillStyle = "darkgoldenrod";
 startScreenCtx.textAlign = "center";
 startScreenCtx.fillText("Dungeon Delver", startScreen.width/2, 200);
 startScreenCtx.font = "bold 25px Courier New";
-startScreenCtx.fillText("How far can you get before time runs out?", startScreen.width/2, 530);
+startScreenCtx.fillText("How deep will you get before the monsters get you?", startScreen.width/2, 530);
 startScreenCtx.font = "20px Courier New";
 startScreenCtx.fillText("Move using the Arrow Keys", startScreen.width/2, 620);
 startScreenCtx.fillText("Attack using the Space Bar", startScreen.width/2, 650);
 var timer;
 var isTutorial=false;
+var gameLoop;
 
 function startButton(){
 	start.style.visibility = "hidden";
 	stage.style.visibility = "visible";
-	var gameLoop = setInterval(update, 16);
+	gameLoop = setInterval(update, 16);
 	DungeonGeneration(); //genrerate the dungeon
-	curRoom= rooms[3][3];
+	curRoom= rooms[2][2];
 	//backgroundMusic.play();
 }
 
@@ -189,28 +201,28 @@ function loadTutorial()
 	floorLayerCtx.clearRect(0,0,750,750);
 	playerLayerCtx.clearRect(0,0,750,750);
 	clearDungeon();
-	rooms[3][3] = new Room;
-	console.log(rooms[3][3]);
-	rooms[3][4] = new Room;
-	rooms[3][5] = new Room;
+	rooms[2][2] = new Room;
+	console.log(rooms[2][2]);
+	rooms[2][3] = new Room;
+	rooms[2][4] = new Room;
 	
-	rooms[3][3].mapX = 3;
-	rooms[3][3].mapY = 3;
-	rooms[3][3].layout[12][24] = 12;
-	rooms[3][3].update(tutorialMove.wallSpawns, tutorialMove.monsterSpawns, tutorialMove.holeSpawns, tutorialMove.spikeSpawns,tutorialMove.teleporters,tutorialMove.fireballSpawns, tutorialMove.fireSpawns);
+	rooms[2][2].mapX = 2;
+	rooms[2][2].mapY = 2;
+	rooms[2][2].layout[12][24] = 12;
+	rooms[2][2].update(tutorialMove.wallSpawns, tutorialMove.monsterSpawns, tutorialMove.holeSpawns, tutorialMove.spikeSpawns,tutorialMove.teleporters,tutorialMove.fireballSpawns, tutorialMove.fireSpawns);
 	
-	rooms[3][4].mapX = 4;
-	rooms[3][4].mapY = 3;
-	rooms[3][4].layout[12][24] = 12;
-	rooms[3][4].layout[12][0] = 14;
-	rooms[3][4].update(tutorialEnemy.wallSpawns, tutorialEnemy.monsterSpawns, tutorialEnemy.holeSpawns, tutorialEnemy.spikeSpawns,tutorialEnemy.teleporters,tutorialEnemy.fireballSpawns,tutorialEnemy.fireSpawns);
+	rooms[2][3].mapX = 3;
+	rooms[2][3].mapY = 2;
+	rooms[2][3].layout[12][24] = 12;
+	rooms[2][3].layout[12][0] = 14;
+	rooms[2][3].update(tutorialEnemy.wallSpawns, tutorialEnemy.monsterSpawns, tutorialEnemy.holeSpawns, tutorialEnemy.spikeSpawns,tutorialEnemy.teleporters,tutorialEnemy.fireballSpawns,tutorialEnemy.fireSpawns);
 	
-	rooms[3][5].mapX = 5;
-	rooms[3][5].mapY = 3;
-	rooms[3][5].layout[12][24] = 12;
-	rooms[3][5].layout[12][0] = 14;
-	rooms[3][5].update(tutorialAttack.wallSpawns, tutorialAttack.monsterSpawns, tutorialAttack.holeSpawns, tutorialAttack.spikeSpawns,tutorialAttack.teleporters,tutorialAttack.fireballSpawns,tutorialAttack.fireSpawns);
-	curRoom=rooms[3][3];
+	rooms[2][4].mapX = 4;
+	rooms[2][4].mapY = 2;
+	rooms[2][4].layout[12][24] = 12;
+	rooms[2][4].layout[12][0] = 14;
+	rooms[2][4].update(tutorialAttack.wallSpawns, tutorialAttack.monsterSpawns, tutorialAttack.holeSpawns, tutorialAttack.spikeSpawns,tutorialAttack.teleporters,tutorialAttack.fireballSpawns,tutorialAttack.fireSpawns);
+	curRoom=rooms[2][2];
 	render();
 	console.log("drawn Floor");
 	
@@ -412,15 +424,15 @@ var upPressed = false;
 var downPressed = false;
 var spacePressed = false;
 
-//Time Variables
+/*/Time Variables
 var minutes = 5;
 var seconds = 0;
-var timeout = false;
+var timeout = false;*/
 
 //UI Font Setup
 uiLayerCtx.font = "bold 30px Courier New";
 uiLayerCtx.fillStyle = "white";
-uiLayerCtx.fillText(minutes+":"+seconds, 655, 0);
+//uiLayerCtx.fillText(minutes+":"+seconds, 655, 0);
 
 //Player Variables and Functions
 var player = {
@@ -432,7 +444,8 @@ var player = {
 	health: 5,
 	maxHealth: 10,
 	ouchTime: 0,
-	animTime: 0
+	animTime: 0,
+	hasKey: false
 };
 
 function playerHurt(){
@@ -455,30 +468,34 @@ var item = function(image, x, y){
 };
 
 function itemDrop(x,y){
-	itemRandom = Math.floor(Math.random()*10);
+	itemRandom = Math.floor(Math.random()*10)%5;
 	if (itemRandom == 0){
-		items.push(new item(heartImage,x,y));
+		curRoom.items.push(new item(heartImage,x,y));
 	}
-	else if (itemRandom == 1){
+	/*else if (itemRandom == 1){
 		items.push(new item(clockImage,x,y));
-	}
+	}*/
 }
 
 function pickUp(){
-	for (var i = 0; i < items.length; i++){
-		if (items[i].xPos == player.xPos && items[i].yPos == player.yPos){
+	for (var i = 0; i < curRoom.items.length; i++){
+		if (curRoom.items[i].xPos == player.xPos && curRoom.items[i].yPos == player.yPos){
 			itemCollectSFX.play();
-			if (items[i].img == clockImage){
+			if (curRoom.items[i].img == clockImage){
 				if (minutes < 99){
 					minutes ++;
 				}
 			}
-			else if (items[i].img == heartImage){
+			else if (curRoom.items[i].img == heartImage){
 				if (player.health < player.maxHealth){
 					player.health ++
 				}
 			}
-			items.splice(i,1);
+			else if (curRoom.items[i].img == keyImage)
+			{
+				player.hasKey = true;
+			}
+			curRoom.items.splice(i,1);
 		}
 	}
 }
@@ -493,6 +510,7 @@ var diagonalEnemy = function() {
 	this.direction = "leftUp";
 	this.dirs = ["leftUp", "leftDown", "rightUp", "rightDown"];
 	this.health = 1;
+	this.hasKey = false;
 
 	this.moveEnemy = function(){
 		this.direction = this.dirs[Math.floor(Math.random()*4)];
@@ -580,6 +598,7 @@ var followEnemy = function() {
 	this.height = 30;
 	this.img = fEnemyLeftImage;
 	this.health = 1;
+	this.hasKey = false;
 	this.xDis = 1;
 	this.yDis = 1;
 
@@ -633,7 +652,7 @@ var followEnemy = function() {
 				if (collision){
 					collision = false;
 				}
-				else if (curRoom.layout[this.y][this.x-1] != 0){
+				else if (curRoom.layout[this.y][this.x-1] != 0 &&curRoom.layout[this.y][this.x-1] != 2){
 					this.x --;
 					collision = collisionCheck(player.xPos, player.yPos);
 					if (collision){
@@ -649,7 +668,7 @@ var followEnemy = function() {
 				if (collision){
 					collision = false;
 				}
-				else if (curRoom.layout[this.y][this.x+1] != 0){
+				else if (curRoom.layout[this.y][this.x+1] != 0&& curRoom.layout[this.y][this.x+1] != 2){
 					this.x ++;
 					collision = collisionCheck(player.xPos, player.yPos);
 					if (collision){
@@ -666,7 +685,7 @@ var followEnemy = function() {
 				if (collision){
 					collision = false;
 				}
-				else if (curRoom.layout[this.y-1][this.x] != 0){
+				else if (curRoom.layout[this.y-1][this.x] != 0 && curRoom.layout[this.y-1][this.x] != 2){
 					this.y --;
 					collision = collisionCheck(player.xPos, player.yPos);
 					if (collision){
@@ -681,7 +700,7 @@ var followEnemy = function() {
 				if (collision){
 					collision = false;
 				}
-				else if (curRoom.layout[this.y+1][this.x] != 0){
+				else if (curRoom.layout[this.y+1][this.x] != 0 && curRoom.layout[this.y+1][this.x] != 2){
 					this.y ++;
 					collision = collisionCheck(player.xPos, player.yPos);
 					if (collision){
@@ -702,6 +721,7 @@ var jumpEnemy = function() {
 	this.height = 30;
 	this.img = jEnemyLeftImage;
 	this.health = 1;
+	this.hasKey = false;
 	this.dirs = ["up", "down", "left", "right", "leftUp", "leftDown", "rightUp", "rightDown"];
 	this.direction = this.dirs[Math.floor(Math.random()*8)];
 	this.move = true;
@@ -861,6 +881,7 @@ var horizontalEnemy = function() {
 	this.img = hEnemyLeftImage;
 	this.direction = "left";
 	this.health = 1;
+	this.hasKey = false;
 
 	this.moveEnemy = function(){
 		switch (this.direction){
@@ -918,6 +939,7 @@ var verticalEnemy = function() {
 	this.img = vEnemyRightImage;
 	this.direction = "up";
 	this.health = 1;
+	this.hasKey = false;
 
 	this.moveEnemy = function(){
 		switch (this.direction){
@@ -1014,55 +1036,68 @@ var fireball = function(xPos, yPos, dir, shot) {
 	this.moveFireball = function(){
 		switch (this.dir){
 			case "up":
-				if (this.y > -1){
+				if (this.y > 1){
 					this.y --;
 				}
 				else if (shot == false){
 					this.y = this.startY;
 				}
-				/*collision = this.collide();
+				collision = this.collide();
 				if (collision){
 					collision = false;
 					playerHurt();
-				}*/
+				}
 				break;
 			case "down":
-				if (this.y < 24){
+				if (this.y < 23){
 					this.y ++;
 				}
 				else if (shot == false){
 					this.y = this.startY;
 				}
+				collision = this.collide();
+				if (collision){
+					collision = false;
+					playerHurt();
+				}
 				break;
 			case "left":
-				if (this.x > -1){
+				if (this.x > 1){
 					this.x --;
 				}
 				else if (shot == false){
 					this.x = this.startX;
 				}
+				collision = this.collide();
+				if (collision){
+					collision = false;
+					playerHurt();
+				}
 				break;
 			case "right":
-				if (this.x < 24){
+				if (this.x < 23){
 					this.x ++;
 				}
 				else if (shot == false){
 					this.x = this.startX;
 				}
+				collision = this.collide();
+				if (collision){
+					collision = false;
+					playerHurt();
+				}
 				break;
 		}
+	
 	};
 
-	/*this.collide = function(){
+	this.collide = function(){
 		col = false;
-		if (this.x < player.xPos + tileX &&
-			this.x + this.width > player.xPos &&
-			this.y < player.yPos + tileY &&
-			this.height + this.y > player.yPos){
+		if (this.x == player.xPos && this.y ==player.yPos ){
 			col = true
 		};
 		return col;
-	};*/
+	};
 };
 
 //Room Variables and Functions
@@ -1099,6 +1134,11 @@ var Room = function(yLoc, xLoc) {
 	this.mapY = yLoc;
 	this.enemies = [];
 	this.fireballs = [];
+	this.items = [];
+	this.doorNorth = false;
+	this.doorSouth = false;
+	this.doorEast = false;
+	this.doorWest = false;
 
 	this.addWalls = function(walls){
 		for (var i=0;i<walls.length;i++){
@@ -1180,23 +1220,23 @@ var Room = function(yLoc, xLoc) {
 var tileX = 30;
 var tileY = 30;
 var randomEnemy = 0;
+var ranRoomX;
+var ranRoomY;
 
-var rooms = [[0, 0, 0, 0, 0, 0, 0],
-	[0, 0, 0, 0, 0, 0, 0],
-	[0, 0, 0, 0, 0, 0, 0],
-	[0, 0, 0, 0, 0, 0, 0],
-	[0, 0, 0, 0, 0, 0, 0],
-	[0, 0, 0, 0, 0, 0, 0],
-	[0, 0, 0, 0, 0, 0, 0]]; //7x7 room layout
+var rooms = [[0, 0, 0, 0, 0],
+	[0, 0, 0, 0, 0],
+	[0, 0, 0, 0, 0],
+	[0, 0, 0, 0, 0],
+	[0, 0, 0, 0, 0]]; //5x5 room layout
 	
 
 
-var curRoom = rooms[3][3];
+var curRoom = rooms[2][2];
 function clearDungeon()
 {
-	for(var i = 0; i<7;i++)
+	for(var i = 0; i<5;i++)
 	{
-		for (var j = 0; j<7;j++)
+		for (var j = 0; j<5;j++)
 		{
 			rooms[i][j] = 0; 
 		}
@@ -1211,51 +1251,67 @@ function newNode (locNS,locEW) //Recursively populate the rooms array with layou
 	var randomRoom = Math.floor(Math.random()*6);
 	rooms[locNS][locEW].update(roomList[randomRoom].wallSpawns, roomList[randomRoom].monsterSpawns, roomList[randomRoom].holeSpawns, roomList[randomRoom].spikeSpawns,roomList[randomRoom].teleporters,roomList[randomRoom].fireballSpawns, roomList[randomRoom].fireSpawns);
 	
-	var hasDoor = Math.floor(Math.random()*10) %2;
-	if (hasDoor || (rooms[locNS][locEW].mapY ==3 && rooms[locNS][locEW].mapX ==3))
+	var hasDoor = Math.floor(Math.random()*100)%4 ;
+	if (hasDoor ==0 || (rooms[locNS][locEW].mapY ==2 && rooms[locNS][locEW].mapX ==2))
 	{
-		
-		rooms[locNS][locEW].layout[0][12] = 11;
-		if(locNS !=0 && rooms[locNS-1][locEW] == 0)
+		if(locNS !=0)
 		{
-			newNode(locNS-1,locEW);
-			rooms[locNS-1][locEW].layout[24][12] = 13;
+			rooms[locNS][locEW].layout[0][12] = 11;
+			rooms[locNS][locEW].doorNorth = true;
+			if(rooms[locNS-1][locEW] == 0)
+			{
+				newNode(locNS-1,locEW);
+				rooms[locNS-1][locEW].layout[24][12] = 13;
+				rooms[locNS-1][locEW].doorSouth = true;
+			}
 		}
 	}
 	
-	var hasDoor = Math.floor(Math.random()*10) %2;
-	if (hasDoor || (rooms[locNS][locEW].mapY ==3 && rooms[locNS][locEW].mapX ==3))
+	var hasDoor = Math.floor(Math.random()*100) %4;
+	if (hasDoor ==0 || (rooms[locNS][locEW].mapY ==2 && rooms[locNS][locEW].mapX ==2))
 	{
-		
-		rooms[locNS][locEW].layout[24][12] = 13;
-		if(locNS !=6 && rooms[locNS+1][locEW] == 0)
+		if(locNS !=4)
 		{
-			newNode(locNS+1,locEW);
-			rooms[locNS+1][locEW].layout[0][12] = 11;
+			rooms[locNS][locEW].layout[24][12] = 13;
+			rooms[locNS][locEW].doorSouth = true;
+			if(rooms[locNS+1][locEW] == 0)
+			{
+				newNode(locNS+1,locEW);
+				rooms[locNS+1][locEW].layout[0][12] = 11;
+				rooms[locNS+1][locEW].doorNorth = true;
+			}
 		}
 	}
 	
-	var hasDoor = Math.floor(Math.random()*10) %2;
-	if (hasDoor||(rooms[locNS][locEW].mapY ==3 && rooms[locNS][locEW].mapX ==3))
+	var hasDoor = Math.floor(Math.random()*100) %4;
+	if (hasDoor||(rooms[locNS][locEW].mapY ==2 && rooms[locNS][locEW].mapX ==2))
 	{
-		
-		rooms[locNS][locEW].layout[12][24] = 12;
-		if(locEW !=6 && rooms[locNS][locEW+1] == 0)
+		if(locEW !=4)
 		{
-			newNode(locNS,locEW+1);
-			rooms[locNS][locEW+1].layout[12][0] = 14;
+			rooms[locNS][locEW].layout[12][24] = 12;
+			rooms[locNS][locEW].doorEast=true;
+			if(rooms[locNS][locEW+1] == 0)
+			{
+				newNode(locNS,locEW+1);
+				rooms[locNS][locEW+1].layout[12][0] = 14;
+				rooms[locNS][locEW+1].doorWest = true;
+			}
 		}
 	}
 	
-	var hasDoor = Math.floor(Math.random()*10) %2;
-	if (hasDoor||(rooms[locNS][locEW].mapY ==3 && rooms[locNS][locEW].mapX ==3))
+	var hasDoor = Math.floor(Math.random()*100) %4;
+	if (hasDoor||(rooms[locNS][locEW].mapY ==2 && rooms[locNS][locEW].mapX ==2))
 	{
-		
-		rooms[locNS][locEW].layout[12][0] = 14;
-		if(locEW !=0 && rooms[locNS][locEW-1] == 0)
+		if(locEW !=0)
 		{
-			newNode(locNS,locEW-1);
-			rooms[locNS][locEW-1].layout[12][24] = 12;
+			rooms[locNS][locEW].layout[12][0] = 14;
+			rooms[locNS][locEW].doorWest = true;
+			if(rooms[locNS][locEW-1] == 0)
+			{
+				newNode(locNS,locEW-1);
+				rooms[locNS][locEW-1].layout[12][24] = 12;
+				rooms[locNS][locEW-1].doorEast = true;
+			}
 		}
 	}
 	
@@ -1263,7 +1319,55 @@ function newNode (locNS,locEW) //Recursively populate the rooms array with layou
 
 function DungeonGeneration() 
 {
-	newNode(3,3);
+	newNode(2,2);
+	rooms[2][1].layout[12][24]=12; //place right door in left room #hotfix
+	rooms[2][2].doorEast = true;
+	rooms[2][2].doorWest = true;
+	rooms[2][2].doorNorth = true;
+	rooms[2][2].doorSouth = true;
+	
+	//give random enemy the key for that floor
+	ranRoomX = Math.floor(Math.random()*5);
+	ranRoomY = Math.floor(Math.random()*5);
+	while(rooms[ranRoomY][ranRoomX]==0)
+	{
+		ranRoomX = Math.floor(Math.random()*5);
+		ranRoomY = Math.floor(Math.random()*5);
+	}
+	rooms[ranRoomY][ranRoomX].enemies[Math.floor(Math.random()*rooms[ranRoomY][ranRoomX].enemies.length)].hasKey = true;
+	
+	var placedLockedDoor = false; // start of picing a random room for the locked door
+	while(placedLockedDoor == false)
+	{
+		ranRoomX = Math.floor(Math.random()*5);
+		ranRoomY = Math.floor(Math.random()*5);
+		if (rooms[ranRoomY][ranRoomX] !=0)
+		{
+			if(rooms[ranRoomY][ranRoomX].doorNorth ==false)
+			{
+				rooms[ranRoomY][ranRoomX].layout[0][12] = 21;
+				placedLockedDoor=true;
+			}
+			
+			else if(rooms[ranRoomY][ranRoomX].doorSouth ==false)
+			{
+				rooms[ranRoomY][ranRoomX].layout[24][12] = 23;
+				placedLockedDoor=true;
+			}
+			else if(rooms[ranRoomY][ranRoomX].doorEast ==false)
+			{
+				rooms[ranRoomY][ranRoomX].layout[12][24] = 22;
+				placedLockedDoor=true;
+			}
+			else if(rooms[ranRoomY][ranRoomX].doorWest ==false)
+			{
+				rooms[ranRoomY][ranRoomX].layout[12][0] = 24;
+				placedLockedDoor=true;
+			}
+		}
+	}
+	
+	
 };
 
 /*for (var i = 0; i < 3; i++){
@@ -1280,7 +1384,6 @@ var curSpikeImg = spikeUpImage;
 var spikeShift = 100;
 var fireballMoveTime = 10;
 var itemRandom = randomRoom = Math.floor(Math.random()*10);
-var items = [];
 var countTick = 0;
 var teleported = false;
 
@@ -1345,13 +1448,27 @@ function onKeyUp(e){
 
 //Movement Functions
 function movePlayer(){
-	if (upPressed && curRoom.layout[player.yPos-1][player.xPos] !=0 && curRoom.layout[player.yPos-1][player.xPos] !=2)
+	if (upPressed && curRoom.layout[player.yPos-1][player.xPos] !=0)
 	{
 		if(curRoom.layout[player.yPos-1][player.xPos] == 11){
 			curRoom = rooms[curRoom.mapY-1][curRoom.mapX];
 			player.xPos = 12;
 			player.yPos = 23;
 		}
+		
+		
+		else if(curRoom.layout[player.yPos-1][player.xPos] == 21&&player.hasKey == true){
+			clearDungeon();
+			floor++
+			curRoom = rooms[2][2];
+			DungeonGeneration();
+			console.log("generate new floor");
+		}
+		
+		else if (curRoom.layout[player.yPos-1][player.xPos] == 2){
+			console.log("walk in hole");
+			var rotate = setInterval(playerRotate,16);
+		}//copy this for all directions below fall into hole anim
 		else if (curRoom.layout[player.yPos-1][player.xPos] == 4) {
 			for (var i = 0; i < 25; i++) {
 				for (var j = 0; j < 25; j++) {
@@ -1388,13 +1505,26 @@ function movePlayer(){
 			}
 		}
 	}
-	if (downPressed && curRoom.layout[player.yPos+1][player.xPos] !=0 && curRoom.layout[player.yPos+1][player.xPos] !=2)
+	if (downPressed && curRoom.layout[player.yPos+1][player.xPos] !=0)
 	{
 		if(curRoom.layout[player.yPos+1][player.xPos] == 13){
 			curRoom = rooms[curRoom.mapY+1][curRoom.mapX];
 			player.xPos = 12;
 			player.yPos = 1;
 		}
+		
+		else if(curRoom.layout[player.yPos+1][player.xPos] == 23&&player.hasKey == true){
+			clearDungeon();
+			floor++;
+			curRoom = rooms[2][2];
+			DungeonGeneration();
+			console.log("generate new floor");
+		}
+		else if (curRoom.layout[player.yPos+1][player.xPos] == 2){
+			console.log("walk in hole");
+			var rotate = setInterval(playerRotate,16);
+		}//copy this for all directions below fall into hole anim
+		
 		else if (curRoom.layout[player.yPos+1][player.xPos] == 4) {
 			for (var i = 0; i < 25; i++) {
 				for (var j = 0; j < 25; j++) {
@@ -1431,13 +1561,26 @@ function movePlayer(){
 			}
 		}
 	}
-	if (leftPressed && curRoom.layout[player.yPos][player.xPos-1] !=0 && curRoom.layout[player.yPos][player.xPos-1] !=2)
+	if (leftPressed && curRoom.layout[player.yPos][player.xPos-1] !=0)
 	{
 		if(curRoom.layout[player.yPos][player.xPos-1] == 14){
 			curRoom = rooms[curRoom.mapY][curRoom.mapX-1];
 			player.xPos = 23;
 			player.yPos = 12;
 		}
+		
+		else if(curRoom.layout[player.yPos][player.xPos-1] == 24&&player.hasKey == true){
+			clearDungeon();
+			floor++;
+			curRoom = rooms[2][2];
+			DungeonGeneration();
+			console.log("generate new floor");
+		}
+			else if (curRoom.layout[player.yPos][player.xPos-1] == 2){
+				console.log("walk in hole");
+			var rotate = setInterval(playerRotate,16);
+		}//copy this for all directions below fall into hole anim
+		
 		else if (curRoom.layout[player.yPos][player.xPos-1] == 4) {
 			for (var i = 0; i < 25; i++) {
 				for (var j = 0; j < 25; j++) {
@@ -1474,11 +1617,11 @@ function movePlayer(){
 			}
 		}
 	}
-	if (rightPressed && curRoom.layout[player.yPos][player.xPos+1] !=0 && curRoom.layout[player.yPos][player.xPos+1] !=2)
-	{
+	if (rightPressed && curRoom.layout[player.yPos][player.xPos+1] !=0)
+		{
 		if(curRoom.layout[player.yPos][player.xPos+1] == 12){
 			
-			if (isTutorial == true && curRoom.mapX == 5)
+			if (isTutorial == true && curRoom.mapX == 4)
 			{
 				isTutorial = false;
 				uiLayerCtx.clearRect(0,0,750,750);
@@ -1494,6 +1637,19 @@ function movePlayer(){
 			player.xPos = 1;
 			player.yPos = 12;
 		}
+		
+		else if(curRoom.layout[player.yPos][player.xPos+1] == 22&&player.hasKey == true){
+			clearDungeon();
+			floor++;
+			curRoom = rooms[2][2];
+			DungeonGeneration();
+			console.log("generate new floor");
+		}
+		else if (curRoom.layout[player.yPos][player.xPos+1] == 2){
+			console.log("walk in hole");
+			var rotate = setInterval(playerRotate,16);
+		}//copy this for all directions below fall into hole anim
+		
 		else if (curRoom.layout[player.yPos][player.xPos+1] == 4) {
 			for (var i = 0; i < 25; i++) {
 				for (var j = 0; j < 25; j++) {
@@ -1562,7 +1718,13 @@ function attack(){
 						curRoom.enemies[i].health --;
 						if (curRoom.enemies[i].health == 0){
 							enemyDeathSFX.play();
+							if (curRoom.enemies[i].hasKey){
+								curRoom.items.pus(new item(keyImage,curRoom.enemies[i].x,curRoom.enemies[i].y));
+							}
+							else 
+							{
 							itemDrop(curRoom.enemies[i].x,curRoom.enemies[i].y);
+							}
 							curRoom.enemies.splice(i,1);
 						}
 					}
@@ -1574,7 +1736,13 @@ function attack(){
 						curRoom.enemies[i].health --;
 						if (curRoom.enemies[i].health == 0){
 							enemyDeathSFX.play();
+							if (curRoom.enemies[i].hasKey){
+								curRoom.items.pus(new item(keyImage,curRoom.enemies[i].x,curRoom.enemies[i].y));
+							}
+							else 
+							{
 							itemDrop(curRoom.enemies[i].x,curRoom.enemies[i].y);
+							}
 							curRoom.enemies.splice(i,1);
 						}
 					}
@@ -1586,7 +1754,13 @@ function attack(){
 						curRoom.enemies[i].health --;
 						if (curRoom.enemies[i].health == 0){
 							enemyDeathSFX.play();
+							if (curRoom.enemies[i].hasKey){
+								curRoom.items.pus(new item(keyImage,curRoom.enemies[i].x,curRoom.enemies[i].y));
+							}
+							else 
+							{
 							itemDrop(curRoom.enemies[i].x,curRoom.enemies[i].y);
+							}
 							curRoom.enemies.splice(i,1);
 						}
 					}
@@ -1598,7 +1772,13 @@ function attack(){
 						curRoom.enemies[i].health --;
 						if (curRoom.enemies[i].health == 0){
 							enemyDeathSFX.play();
+							if (curRoom.enemies[i].hasKey){
+								curRoom.items.pus(new item(keyImage,curRoom.enemies[i].x,curRoom.enemies[i].y));
+							}
+							else 
+							{
 							itemDrop(curRoom.enemies[i].x,curRoom.enemies[i].y);
+							}
 							curRoom.enemies.splice(i,1);
 						}
 					}
@@ -1646,13 +1826,25 @@ function drawFloors()
 				case 14:
 					floorLayerCtx.drawImage(doorWestImage,j*tileX,i*tileY);
 					break;
+				case 21:
+					floorLayerCtx.drawImage(doorLockNorthImage,j*tileX,i*tileY);
+					break;
+				case 22:
+					floorLayerCtx.drawImage(doorLockEastImage,j*tileX,i*tileY);
+					break;
+				case 23:
+					floorLayerCtx.drawImage(doorLockSouthImage,j*tileX,i*tileY);
+					break;
+				case 24:
+					floorLayerCtx.drawImage(doorLockWestImage,j*tileX,i*tileY);
+					break;
 			}
 		}
 	}
 }
 
 //UI Functions (Traps included in UI functions)
-function tick(){
+/*function tick(){
 	if (seconds > 0){
 		seconds --;
 	}
@@ -1663,7 +1855,7 @@ function tick(){
 	else if (minutes == 0 && seconds == 0){
 		timeout = true;
 	}
-}
+}*/
 
 //Game Loop
 function update(){
@@ -1691,7 +1883,7 @@ function update(){
 				break;
 		}
 	}
-	if(isTutorial == false)
+	/*if(isTutorial == false)
 	{
 		if (countTick == 63){
 			tick();
@@ -1700,7 +1892,7 @@ function update(){
 		else{
 			countTick ++;
 		}
-	}
+	}*/
 	
 	
 	spikeUpdate();
@@ -1708,7 +1900,7 @@ function update(){
 	fireUpdate();
 	render();
 }
-var degree = 1;
+var degree = 0;
 //Trap Functions
 function fireUpdate(){
 	/*realTimeLayerCtx.clearRect(0,0,750,750);
@@ -1719,21 +1911,26 @@ function fireUpdate(){
 		degree = 0;*/
 }
 
-/*function drawRotated(image, context) {//realTimeLayerCtx.drawImage(fireSpinImage,j*tileX,(i-3)*tileY);
-	for(var i = 0; i<24;i++)
-	{
-		for (var j = 0; j<24;j++)
-			if(curRoom.layout[i][j] == 6)
-			{
-				context.save();
-				context.translate((j+.5)*tileX, (i+.5)*tileY);
-				context.rotate(degree*Math.PI / 180);
-				context.drawImage(image, -image.width/2, (-image.height/8)+30);
-				context.restore();
-			}
-	}
+var degree = 0;
+function playerRotate()
+{
+	drawRotated(playerOuchImage, playerLayerCtx);
+	if(degree <360)
+		degree+=10;
+	else
+		degree = 0;
+}
+
+function drawRotated(image, context) {//realTimeLayerCtx.drawImage(fireSpinImage,j*tileX,(i-3)*tileY);
+	
+	context.save();
+	context.translate(tileX, tileY);
+	context.rotate(degree*Math.PI / 180);
+	context.drawImage(image, -image.width/2, -image.height/2);
+	context.restore();
+}
 		
-}*/
+
 
 function fireballUpdate(){
 	if (fireballMoveTime > 0){
@@ -1776,23 +1973,23 @@ function render(){
 	if(isTutorial==true)
 	{
 		
-		if (curRoom.mapX == 3)
+		if (curRoom.mapX == 2)
 		{
 			uiLayerCtx.fillText("Move using the Arrow Keys", 100, 625);
 			console.log("write text");
 		}
-		else if (curRoom.mapX == 4)
+		else if (curRoom.mapX == 3)
 		{
 			uiLayerCtx.fillText("See How Enemies Move When You Do", 100, 625);
 			console.log("Enemy room check");
 		}
-		else if (curRoom.mapX == 5)
+		else if (curRoom.mapX == 4)
 		{
 			uiLayerCtx.fillText("Ohh No they escaped.", 220, 625);
 			uiLayerCtx.fillText("Use Space bar to swing your Sword.", 100, 655);
 		}
 	}
-	if (player.health > 0 && timeout === false){
+	if (player.health > 0){ //&& timeout === false){
 		for (var i = 0; i < player.health; i++){
 			playerLayerCtx.drawImage(heartImage,720-(i*tileX),0);
 		}
@@ -1813,8 +2010,8 @@ function render(){
 					break;
 			}
 		}
-		for (var i = 0; i < items.length; i++){
-			playerLayerCtx.drawImage(items[i].img, items[i].xPos*tileX, items[i].yPos*tileY);
+		for (var i = 0; i < curRoom.items.length; i++){
+			playerLayerCtx.drawImage(curRoom.items[i].img, curRoom.items[i].xPos*tileX, curRoom.items[i].yPos*tileY);
 		}
 		for (var i = 0; i < curRoom.fireballs.length; i++){
 			playerLayerCtx.drawImage(curRoom.fireballs[i].img, curRoom.fireballs[i].x*tileX, curRoom.fireballs[i].y*tileY);
@@ -1823,13 +2020,18 @@ function render(){
 		for (var i = 0; i < curRoom.enemies.length; i++){
 			playerLayerCtx.drawImage(curRoom.enemies[i].img,curRoom.enemies[i].x*tileX,curRoom.enemies[i].y*tileY);
 		}
+		
+		if (player.hasKey)
+		{
+			playerLayerCtx.drawImage(keyImage,720,720);
+		}
 		uiLayerCtx.fillText("Floor "+floor, 0, 744);
-		if (seconds < 10){
+		/*if (seconds < 10){
 			uiLayerCtx.fillText(minutes+":0"+seconds, 0, 24);
 		}
 		else{
 			uiLayerCtx.fillText(minutes+":"+seconds, 0, 24);
-		}
+		}*/
 	}
 	else{
 		stage.style.visibility = "hidden";
