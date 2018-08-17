@@ -1448,7 +1448,7 @@ function onKeyUp(e){
 
 //Movement Functions
 function movePlayer(){
-	if (upPressed && curRoom.layout[player.yPos-1][player.xPos] !=0)
+	if (upPressed && curRoom.layout[player.yPos-1][player.xPos] !=0 && curRoom.layout[player.yPos-1][player.xPos] !=2 )
 	{
 		if(curRoom.layout[player.yPos-1][player.xPos] == 11){
 			curRoom = rooms[curRoom.mapY-1][curRoom.mapX];
@@ -1465,10 +1465,10 @@ function movePlayer(){
 			console.log("generate new floor");
 		}
 		
-		else if (curRoom.layout[player.yPos-1][player.xPos] == 2){
+		/*else if (curRoom.layout[player.yPos-1][player.xPos] == 2){
 			console.log("walk in hole");
 			var rotate = setInterval(playerRotate,16);
-		}//copy this for all directions below fall into hole anim
+		}//copy this for all directions below fall into hole anim*/
 		else if (curRoom.layout[player.yPos-1][player.xPos] == 4) {
 			for (var i = 0; i < 25; i++) {
 				for (var j = 0; j < 25; j++) {
@@ -1505,7 +1505,7 @@ function movePlayer(){
 			}
 		}
 	}
-	if (downPressed && curRoom.layout[player.yPos+1][player.xPos] !=0)
+	if (downPressed && curRoom.layout[player.yPos+1][player.xPos] !=0 && curRoom.layout[player.yPos+1][player.xPos] !=2)
 	{
 		if(curRoom.layout[player.yPos+1][player.xPos] == 13){
 			curRoom = rooms[curRoom.mapY+1][curRoom.mapX];
@@ -1520,10 +1520,10 @@ function movePlayer(){
 			DungeonGeneration();
 			console.log("generate new floor");
 		}
-		else if (curRoom.layout[player.yPos+1][player.xPos] == 2){
+		/*else if (curRoom.layout[player.yPos+1][player.xPos] == 2){
 			console.log("walk in hole");
 			var rotate = setInterval(playerRotate,16);
-		}//copy this for all directions below fall into hole anim
+		}//copy this for all directions below fall into hole anim*/
 		
 		else if (curRoom.layout[player.yPos+1][player.xPos] == 4) {
 			for (var i = 0; i < 25; i++) {
@@ -1561,7 +1561,7 @@ function movePlayer(){
 			}
 		}
 	}
-	if (leftPressed && curRoom.layout[player.yPos][player.xPos-1] !=0)
+	if (leftPressed && curRoom.layout[player.yPos][player.xPos-1] !=0 && curRoom.layout[player.yPos][player.xPos-1] !=2)
 	{
 		if(curRoom.layout[player.yPos][player.xPos-1] == 14){
 			curRoom = rooms[curRoom.mapY][curRoom.mapX-1];
@@ -1576,10 +1576,10 @@ function movePlayer(){
 			DungeonGeneration();
 			console.log("generate new floor");
 		}
-			else if (curRoom.layout[player.yPos][player.xPos-1] == 2){
+			/*else if (curRoom.layout[player.yPos][player.xPos-1] == 2){
 				console.log("walk in hole");
 			var rotate = setInterval(playerRotate,16);
-		}//copy this for all directions below fall into hole anim
+		}//copy this for all directions below fall into hole anim*/
 		
 		else if (curRoom.layout[player.yPos][player.xPos-1] == 4) {
 			for (var i = 0; i < 25; i++) {
@@ -1617,7 +1617,7 @@ function movePlayer(){
 			}
 		}
 	}
-	if (rightPressed && curRoom.layout[player.yPos][player.xPos+1] !=0)
+	if (rightPressed && curRoom.layout[player.yPos][player.xPos+1] !=0 && curRoom.layout[player.yPos][player.xPos+1] !=2)
 		{
 		if(curRoom.layout[player.yPos][player.xPos+1] == 12){
 			
@@ -1645,10 +1645,10 @@ function movePlayer(){
 			DungeonGeneration();
 			console.log("generate new floor");
 		}
-		else if (curRoom.layout[player.yPos][player.xPos+1] == 2){
+		/*else if (curRoom.layout[player.yPos][player.xPos+1] == 2){
 			console.log("walk in hole");
 			var rotate = setInterval(playerRotate,16);
-		}//copy this for all directions below fall into hole anim
+		}//copy this for all directions below fall into hole anim*/
 		
 		else if (curRoom.layout[player.yPos][player.xPos+1] == 4) {
 			for (var i = 0; i < 25; i++) {
